@@ -61,12 +61,17 @@ def install_kerberos_packages_yum():
     irods_python_ci_utilities.subprocess_get_output(['sudo', 'systemctl', 'enable', 'krb5kdc.service'], check_rc=True)
     irods_python_ci_utilities.subprocess_get_output(['sudo', 'systemctl', 'enable', 'kadmin.service'], check_rc=True)
 
+def install_kerberos_packages_zypper():
+    irods_python_ci_utilities.install_os_packages(['krb5-server', 'krb5', 'krb5-client'])
+    irods_python_ci_utilities.subprocess_get_output(['sudo', 'systemctl', 'enable', 'krb5kdc.service'], check_rc=True)
+    irods_python_ci_utilities.subprocess_get_output(['sudo', 'systemctl', 'enable', 'kadmin.service'], check_rc=True)
 
 def install_kerberos_packages():
     dispatch_map = {
         'Ubuntu': install_kerberos_packages_apt,
         'Centos': install_kerberos_packages_yum,
-        'Centos linux': install_kerberos_packages_yum
+        'Centos linux': install_kerberos_packages_yum,
+        'Opensuse leap': install_kerberos_packages_zypper
     }
     try:
         return dispatch_map[irods_python_ci_utilities.get_distribution()]()
@@ -180,7 +185,8 @@ def configure_realm_and_domain():
     dispatch_map = {
         'Ubuntu': configure_realm_and_domain_apt,
         'Centos': configure_realm_and_domain_yum,
-        'Centos linux': configure_realm_and_domain_yum
+        'Centos linux': configure_realm_and_domain_yum,
+        'Opensuse leap': configure_realm_and_domain_yum
     }
     try:
         return dispatch_map[irods_python_ci_utilities.get_distribution()]()

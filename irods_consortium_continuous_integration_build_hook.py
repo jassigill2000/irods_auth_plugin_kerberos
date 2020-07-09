@@ -18,6 +18,7 @@ def install_building_dependencies(externals_directory):
     externals_list = ['irods-externals-cmake3.11.4-0',
                       'irods-externals-avro1.9.0-0',
                       'irods-externals-boost1.67.0-0',
+                      'irods-externals-catch22.3.0-0',
                       'irods-externals-clang-runtime6.0-0',
                       'irods-externals-clang6.0-0',
                       'irods-externals-cppzmq4.2.3-0',
@@ -55,6 +56,7 @@ def install_os_specific_dependencies():
         'Centos': install_os_specific_dependencies_yum,
         'Centos linux': install_os_specific_dependencies_yum,
         'Opensuse ': install_os_specific_dependencies_zypper,
+        'Opensuse leap': install_os_specific_dependencies_zypper,
     }
     try:
         return dispatch_map[irods_python_ci_utilities.get_distribution()]()
